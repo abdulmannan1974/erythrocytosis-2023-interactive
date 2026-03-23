@@ -7,7 +7,7 @@ import {
 
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+// Tabs shadcn no longer used in App — replaced with native button nav
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
@@ -81,19 +81,23 @@ export default function App() {
       <header className="bg-gradient-to-br from-slate-800 via-slate-700 to-teal-700 text-white px-6 py-10">
         <div className="max-w-5xl mx-auto">
           {/* Blood Doctor branding */}
-          <div className="flex items-center gap-2 mb-5">
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px", flexWrap: "wrap" }}>
             <span style={{
-              fontSize: "1.35rem",
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "4px",
+              fontSize: "1.15rem",
               fontWeight: 800,
-              letterSpacing: "-0.02em",
-              background: "linear-gradient(135deg, #f59e0b 0%, #ef4444 60%, #dc2626 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
+              letterSpacing: "-0.01em",
+              color: "#ffffff",
+              background: "rgba(251,191,36,0.18)",
+              border: "1.5px solid rgba(251,191,36,0.45)",
+              borderRadius: "8px",
+              padding: "3px 11px 3px 9px",
             }}>Blood🩸Doctor</span>
-            <span style={{ color: "rgba(255,255,255,0.35)", fontSize: "1rem" }}>·</span>
-            <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.75rem", fontWeight: 500, letterSpacing: "0.05em", textTransform: "uppercase" }}>
-              Dr Abdul Mannan · Bangor Haemophilia Centre
+            <span style={{ color: "rgba(255,255,255,0.35)" }}>·</span>
+            <span style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.78rem", fontWeight: 500, letterSpacing: "0.04em" }}>
+              Dr Abdul Mannan &nbsp;|&nbsp; Bangor Haemophilia Centre
             </span>
           </div>
           <div className="flex flex-wrap gap-2 mb-4">
@@ -112,50 +116,66 @@ export default function App() {
         </div>
       </header>
 
-      {/* ── CONTENT with shadcn Tabs ── */}
+      {/* ── CONTENT ── */}
       <div className="max-w-5xl mx-auto px-4 py-8">
-        <Tabs value={activeTab} onValueChange={setActiveTab}
-          style={{ display: "flex", flexDirection: "column", width: "100%" }}>
-          <TabsList
-            style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", width: "100%", height: "auto" }}
-            className="gap-1 bg-slate-800 p-2 rounded-xl mb-6">
-            {[
-              { value: "overview",     label: "Overview",        icon: <BookOpen size={13} /> },
-              { value: "pathogenesis", label: "Pathogenesis",    icon: <FlaskConical size={13} /> },
-              { value: "diagnosis",    label: "Diagnosis",       icon: <Beaker size={13} /> },
-              { value: "hereditary",   label: "Hereditary",      icon: <Dna size={13} /> },
-              { value: "acquired",     label: "Acquired",        icon: <Heart size={13} /> },
-              { value: "management",   label: "Management",      icon: <Pill size={13} /> },
-              { value: "pathways",     label: "Care Pathways",   icon: <Map size={13} /> },
-              { value: "pearls",       label: "Clinical Pearls", icon: <Star size={13} /> },
-            ].map(t => {
-              const isActive = activeTab === t.value;
-              return (
-                <TabsTrigger key={t.value} value={t.value}
-                  style={{
-                    flex: "0 0 auto",
-                    backgroundColor: isActive ? "#fbbf24" : "transparent",
-                    color: isActive ? "#0f172a" : "rgba(255,255,255,0.78)",
-                    fontWeight: isActive ? 700 : 600,
-                    border: "none",
-                    outline: "none",
-                  }}
-                  className="flex items-center gap-1.5 text-xs rounded-md px-3 py-1.5 transition-colors hover:bg-white/10">
-                  {t.icon}{t.label}
-                </TabsTrigger>
-              );
-            })}
-          </TabsList>
 
-          <TabsContent value="overview"><OverviewTab /></TabsContent>
-          <TabsContent value="pathogenesis"><PathogenesisTab /></TabsContent>
-          <TabsContent value="diagnosis"><DiagnosisTab /></TabsContent>
-          <TabsContent value="hereditary"><HereditaryTab /></TabsContent>
-          <TabsContent value="acquired"><AcquiredTab /></TabsContent>
-          <TabsContent value="management"><ManagementTab /></TabsContent>
-          <TabsContent value="pathways"><PathwaysTab /></TabsContent>
-          <TabsContent value="pearls"><PearlsTab /></TabsContent>
-        </Tabs>
+        {/* ── Pure button tab bar — zero Tailwind colour classes on the buttons ── */}
+        <nav style={{
+          display: "flex", flexWrap: "wrap", gap: "4px",
+          backgroundColor: "#1e293b",
+          padding: "8px", borderRadius: "14px", marginBottom: "24px",
+          position: "sticky", top: 0, zIndex: 20,
+          boxShadow: "0 4px 18px rgba(0,0,0,0.25)",
+        }}>
+          {([
+            { value: "overview",     label: "Overview",        icon: <BookOpen size={13} /> },
+            { value: "pathogenesis", label: "Pathogenesis",    icon: <FlaskConical size={13} /> },
+            { value: "diagnosis",    label: "Diagnosis",       icon: <Beaker size={13} /> },
+            { value: "hereditary",   label: "Hereditary",      icon: <Dna size={13} /> },
+            { value: "acquired",     label: "Acquired",        icon: <Heart size={13} /> },
+            { value: "management",   label: "Management",      icon: <Pill size={13} /> },
+            { value: "pathways",     label: "Care Pathways",   icon: <Map size={13} /> },
+            { value: "pearls",       label: "Clinical Pearls", icon: <Star size={13} /> },
+          ] as const).map(t => {
+            const on = activeTab === t.value;
+            return (
+              <button
+                key={t.value}
+                onClick={() => setActiveTab(t.value)}
+                style={{
+                  display: "inline-flex", alignItems: "center", gap: "5px",
+                  padding: "6px 13px", borderRadius: "8px",
+                  border: "none", cursor: "pointer",
+                  fontSize: "0.72rem", fontWeight: on ? 700 : 600,
+                  backgroundColor: on ? "#fbbf24" : "transparent",
+                  color: on ? "#0f172a" : "rgba(255,255,255,0.82)",
+                  transition: "background-color 0.15s ease",
+                  outline: "none",
+                  whiteSpace: "nowrap",
+                }}
+                onMouseEnter={e => {
+                  if (!on) (e.currentTarget as HTMLButtonElement).style.backgroundColor = "rgba(255,255,255,0.1)";
+                }}
+                onMouseLeave={e => {
+                  if (!on) (e.currentTarget as HTMLButtonElement).style.backgroundColor = "transparent";
+                }}
+              >{t.icon}{t.label}</button>
+            );
+          })}
+        </nav>
+
+        {/* ── Tab content panels ── */}
+        <div>
+          {activeTab === "overview"     && <OverviewTab />}
+          {activeTab === "pathogenesis" && <PathogenesisTab />}
+          {activeTab === "diagnosis"    && <DiagnosisTab />}
+          {activeTab === "hereditary"   && <HereditaryTab />}
+          {activeTab === "acquired"     && <AcquiredTab />}
+          {activeTab === "management"   && <ManagementTab />}
+          {activeTab === "pathways"     && <PathwaysTab />}
+          {activeTab === "pearls"       && <PearlsTab />}
+        </div>
+
       </div>
 
       {/* ── FOOTER ── */}
