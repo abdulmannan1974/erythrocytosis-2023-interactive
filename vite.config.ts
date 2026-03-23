@@ -7,6 +7,13 @@ export default defineConfig({
   build: {
     outDir: 'docs',
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        entryFileNames: 'assets/index.js',
+        chunkFileNames: 'assets/index.js',
+        assetFileNames: 'assets/index.[ext]',
+      },
+    },
   },
   plugins: [react()],
   resolve: {
