@@ -97,8 +97,11 @@ export default function App() {
 
       {/* ── CONTENT with shadcn Tabs ── */}
       <div className="max-w-5xl mx-auto px-4 py-8">
-        <Tabs defaultValue="overview" className="w-full flex-col">
-          <TabsList className="flex flex-wrap h-auto gap-1 bg-slate-800 p-2 rounded-xl mb-6 w-full justify-start">
+        <Tabs defaultValue="overview"
+          style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+          <TabsList
+            style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", width: "100%", height: "auto" }}
+            className="gap-1 bg-slate-800 p-2 rounded-xl mb-6">
             {[
               { value: "overview",     label: "Overview",        icon: <BookOpen size={13} /> },
               { value: "pathogenesis", label: "Pathogenesis",    icon: <FlaskConical size={13} /> },
@@ -110,6 +113,7 @@ export default function App() {
               { value: "pearls",       label: "Clinical Pearls", icon: <Star size={13} /> },
             ].map(t => (
               <TabsTrigger key={t.value} value={t.value}
+                style={{ flex: "0 0 auto" }}
                 className="flex items-center gap-1.5 text-xs font-semibold text-white/70 data-active:bg-amber-400 data-active:text-slate-900 rounded-md px-3 py-1.5">
                 {t.icon}{t.label}
               </TabsTrigger>
