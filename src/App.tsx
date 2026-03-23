@@ -73,12 +73,29 @@ function PathwayCard({ value, icon, title, steps, callout }: {
 
 /* ════════════════════════════════════════════════════════ APP ════════════ */
 export default function App() {
+  const [activeTab, setActiveTab] = useState("overview");
   return (
     <div className="min-h-screen bg-gray-50 font-sans">
 
       {/* ── HERO ── */}
       <header className="bg-gradient-to-br from-slate-800 via-slate-700 to-teal-700 text-white px-6 py-10">
         <div className="max-w-5xl mx-auto">
+          {/* Blood Doctor branding */}
+          <div className="flex items-center gap-2 mb-5">
+            <span style={{
+              fontSize: "1.35rem",
+              fontWeight: 800,
+              letterSpacing: "-0.02em",
+              background: "linear-gradient(135deg, #f59e0b 0%, #ef4444 60%, #dc2626 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}>Blood🩸Doctor</span>
+            <span style={{ color: "rgba(255,255,255,0.35)", fontSize: "1rem" }}>·</span>
+            <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.75rem", fontWeight: 500, letterSpacing: "0.05em", textTransform: "uppercase" }}>
+              Dr Abdul Mannan · Bangor Haemophilia Centre
+            </span>
+          </div>
           <div className="flex flex-wrap gap-2 mb-4">
             <Badge variant="secondary">Gangat · Szuber · Tefferi</Badge>
             <Badge variant="secondary">Am J Hematol 2023;98:965–981</Badge>
@@ -97,7 +114,7 @@ export default function App() {
 
       {/* ── CONTENT with shadcn Tabs ── */}
       <div className="max-w-5xl mx-auto px-4 py-8">
-        <Tabs defaultValue="overview"
+        <Tabs value={activeTab} onValueChange={setActiveTab}
           style={{ display: "flex", flexDirection: "column", width: "100%" }}>
           <TabsList
             style={{ display: "flex", flexDirection: "row", flexWrap: "wrap", width: "100%", height: "auto" }}
@@ -111,13 +128,23 @@ export default function App() {
               { value: "management",   label: "Management",      icon: <Pill size={13} /> },
               { value: "pathways",     label: "Care Pathways",   icon: <Map size={13} /> },
               { value: "pearls",       label: "Clinical Pearls", icon: <Star size={13} /> },
-            ].map(t => (
-              <TabsTrigger key={t.value} value={t.value}
-                style={{ flex: "0 0 auto" }}
-                className="flex items-center gap-1.5 text-xs font-semibold text-white/70 data-active:bg-amber-400 data-active:text-slate-900 rounded-md px-3 py-1.5">
-                {t.icon}{t.label}
-              </TabsTrigger>
-            ))}
+            ].map(t => {
+              const isActive = activeTab === t.value;
+              return (
+                <TabsTrigger key={t.value} value={t.value}
+                  style={{
+                    flex: "0 0 auto",
+                    backgroundColor: isActive ? "#fbbf24" : "transparent",
+                    color: isActive ? "#0f172a" : "rgba(255,255,255,0.78)",
+                    fontWeight: isActive ? 700 : 600,
+                    border: "none",
+                    outline: "none",
+                  }}
+                  className="flex items-center gap-1.5 text-xs rounded-md px-3 py-1.5 transition-colors hover:bg-white/10">
+                  {t.icon}{t.label}
+                </TabsTrigger>
+              );
+            })}
           </TabsList>
 
           <TabsContent value="overview"><OverviewTab /></TabsContent>
