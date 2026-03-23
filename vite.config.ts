@@ -4,6 +4,10 @@ import path from 'path'
 
 export default defineConfig({
   base: '/erythrocytosis-2023-interactive/',
+  build: {
+    outDir: 'docs',
+    emptyOutDir: true,
+  },
   plugins: [react()],
   resolve: {
     alias: {
